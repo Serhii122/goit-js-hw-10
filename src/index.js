@@ -2,15 +2,15 @@ import './css/styles.css';
 import fetchCountries from './fetchCountries';
 import debounce from 'lodash.debounce';
 import Notiflix from 'notiflix';
-
 const DEBOUNCE_DELAY = 300;
 const refs = {
   searchInput: document.querySelector('#search-box'),
   countryList: document.querySelector('.country-list'),
   countryInfo: document.querySelector('.country-info'),
 };
-
 let country = "";
+
+
 
 refs.searchInput.addEventListener(
   'input',
@@ -20,16 +20,20 @@ function inputCounty(e) {
   deliteMarckupCountreis();
   country = e.target.value.trim();
   fetchCountries(country).then(marckup).catch(error);
-}
+} 
 function marckup(data) {
+  
   if (data.length >= 2 && data.length <= 10) {  
+   
     countryList(data)
     } else if (data.length === 1) {
-      countryInfo(data);
-    } else {
-      Notiflix.Notify.info('Too many matches found. Please enter a more specific name.'); 
+     countryInfo(data);
+    } else
+     {
+     Notiflix.Notify.info('Too many matches found. Please enter a more specific name.');
+      
     }
-}
+  }
 function countryList(data) {
   deliteMarckupCountreis();
   const marckupList = data
@@ -65,13 +69,13 @@ function countryInfo(data) {
 }
 function deliteMarckupCountreis() {
   refs.countryInfo.innerHTML = '';
-  refs.countryList.innerHTML='';
+    refs.countryList.innerHTML='';
 }
 function error (error) {
-  if (error.message === '404') {       
-    return Notiflix.Notify.failure(
-      'Oops, there is no country with that name'
-    );
-  }
-  return Notiflix.Notify.failure(`Oops, server error:"${error}"`);
-};
+      if (error.message === '404') {       
+        return Notiflix.Notify.failure(
+          'Oops, there is no country with that name'
+        );
+      }
+      return Notiflix.Notify.failure(`Oops, server error:"${error}"`);
+    };
